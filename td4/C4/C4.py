@@ -5,7 +5,7 @@ entiers=list(map(int,input().split()))
 requetes=[]
 for i in range(R):
     a,b=map(int,input().split())
-    requetes.append([a,b])
+    #requetes.append([a,b])
 
 
 '''
@@ -21,19 +21,32 @@ def Naif(N,R,P,entiers,requetes):
 
 def C4(N,R,P,entiers,requetes):
     res=1
-    tmp=entiers.copy()
+    S=[]
     C=[]
     val=1
-    #C.append(0)
-    for _ in tmp:
+    for _ in entiers:
         #print(_)
         if _==0:
             val+=1
             C.append(0)
         else:
             C.append(val)
+
+
+    S.append(1)
+    for i in range(N):
+        if entiers[i]==0:
+            res=1
+            S.append(1)
+        else:
+            res*=entiers[i]
+            S.append(res%P)
+    
+    #print(entiers)
+    #print(S)
     #print(C)
 
+    '''
     for i in range(N):
         if entiers[i]==0:
             res=1
@@ -41,8 +54,10 @@ def C4(N,R,P,entiers,requetes):
         else:
             res*=entiers[i]
             entiers[i]=res%P
-    
-    entiers.insert(0,1)
+    '''
+
+
+    #entiers.insert(0,1)
 
     for a,b in requetes:
         #a=item[0]+1
@@ -50,11 +65,6 @@ def C4(N,R,P,entiers,requetes):
         
         #a=a+1
         #b=b+1
-
-        if C[a]==0:
-        #if C[a-1]==0:
-            print(0)
-            continue
 
         if C[a]==0 or C[a]!=C[b]:
         #if C[a-1]!=C[b-1]:
@@ -68,12 +78,13 @@ def C4(N,R,P,entiers,requetes):
             #print(entiers[b]%P)
         else:
         '''
-        print ( (entiers[b+1]*pow(entiers[a],P-2,P) ) %P)
+        print ( (S[b+1]*pow(S[a],P-2,P) ) %P)
+
+        #print ( (entiers[b+1]*pow(entiers[a],P-2,P) ) %P)
         #print ( (entiers[b]*pow(entiers[a-1],P-2,P) ) %P)
     return 0
 
 def main():
-
     C4(N,R,P,entiers,requetes)
 
 start=time.time()
