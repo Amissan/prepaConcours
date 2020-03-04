@@ -1,4 +1,4 @@
-#import time
+import time
 
 N,R,P=map(int,input().split())
 entiers=list(map(int,input().split()))
@@ -8,7 +8,7 @@ for i in range(R):
     requetes.append([a,b])
 
 
-
+'''
 def Naif(N,R,P,entiers,requetes):
     res=1
     for item in requetes:
@@ -17,68 +17,67 @@ def Naif(N,R,P,entiers,requetes):
             res*=iteme
         print(res%P)
     return 0
-
+'''
 
 def C4(N,R,P,entiers,requetes):
     res=1
     tmp=entiers.copy()
-    print(tmp)
     C=[]
-
     val=1
     #C.append(0)
     for _ in tmp:
+        #print(_)
         if _==0:
             val+=1
             C.append(0)
         else:
             C.append(val)
-
     #print(C)
 
     for i in range(N):
         if entiers[i]==0:
             res=1
-            entiers[i]=0
+            entiers[i]=1
         else:
             res*=entiers[i]
             entiers[i]=res%P
-
+    
     entiers.insert(0,1)
 
-    for item in requetes:
-        a=item[0]+1
-        b=item[1]+1
-
-        if a==b:
-            print(tmp[a-1]%P)
-            continue
+    for a,b in requetes:
+        #a=item[0]+1
+        #b=item[1]+1
         
+        #a=a+1
+        #b=b+1
+
         if C[a]==0:
+        #if C[a-1]==0:
             print(0)
             continue
 
-        if C[a]!=C[b]:
+        if C[a]==0 or C[a]!=C[b]:
+        #if C[a-1]!=C[b-1]:
             print(0)
             continue
         
-        if C[a]!=C[b]:
-            if entiers[a-1]==0:
-                print(entiers[b]%P)
-            else:
-                print ( (entiers[b]*pow(entiers[a-1],P-2,P) ) %P)
-            continue
-
-
-
+        '''
+        if entiers[a]==0:
+        #if entiers[a-1]==0:
+            print(entiers[b+1]%P)
+            #print(entiers[b]%P)
+        else:
+        '''
+        print ( (entiers[b+1]*pow(entiers[a],P-2,P) ) %P)
+        #print ( (entiers[b]*pow(entiers[a-1],P-2,P) ) %P)
     return 0
 
 def main():
+
     C4(N,R,P,entiers,requetes)
 
-
-#start=time.time()
+start=time.time()
 main()
-#end=time.time()
+end=time.time()
 
-#print(end-start," seconds")
+print(end-start," seconds")
